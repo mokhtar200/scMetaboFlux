@@ -216,7 +216,7 @@ citation("scMetaboFlux")
 
 ## License
 
-MIT License - see LICENSE file for details.
+The Artistic License 2.0 - see LICENSE file for details.
 
 ## Contributing
 

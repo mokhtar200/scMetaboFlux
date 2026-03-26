@@ -233,9 +233,6 @@ Please report issues at: https://github.com/scMetaboFlux/scMetaboFlux/issues
 - [GSVA](https://bioconductor.org/packages/GSVA) - Gene Set Variation Analysis
 - [SingleCellExperiment](https://bioconductor.org/packages/SingleCellExperiment) - S4 class for single-cell data
 
-## Funding
-
-This project was supported by [funding source].
 
 ---
 

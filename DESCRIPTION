@@ -1,0 +1,83 @@
+Package: scMetaboFlux
+Title: Single-Cell Energy Metabolism Inference Engine
+Version: 1.0.0
+Date: 2024-01-15
+Author: Metabolic Analysis Team [aut, cre]
+Maintainer: Metabolic Analysis Team <dev@scmetaboFlux.org>
+Authors@R: c(
+    person(given = "Metabolic", family = "Analysis Team", 
+           email = "dev@scmetaboFlux.org", 
+           role = c("aut", "cre")))
+Description: Inferring cellular energy states from single-cell transcriptomics via 
+    metabolic flux approximation. Converts transcriptomics data into quantitative 
+    metabolic flux estimates including ATP production, glycolysis, OXPHOS activity,
+    and metabolic phenotype classification at single-cell resolution.
+    Key features include:
+    (1) Pre-built metabolic gene sets for 12 pathways (KEGG/Reactome curated);
+    (2) Multiple pathway scoring methods (AUCell, GSVA, mean expression);
+    (3) Novel ATP production estimation algorithm;
+    (4) Pseudo-flux calculation with rate-limiting enzyme weighting;
+    (5) Classification of cells into 5 metabolic phenotypes;
+    (6) Comprehensive visualization and differential analysis tools.
+License: MIT
+URL: https://github.com/scMetaboFlux/scMetaboFlux
+BugReports: https://github.com/scMetaboFlux/scMetaboFlux/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: 
+    R (>= 4.3.0)
+Imports:
+    methods,
+    stats,
+    utils,
+    Matrix (>= 1.6-0),
+    Seurat (>= 5.0.0),
+    SeuratObject (>= 5.0.0),
+    SingleCellExperiment (>= 1.24.0),
+    SummarizedExperiment (>= 1.30.0),
+    GSVA (>= 1.50.0),
+    AUCell (>= 1.24.0),
+    GSEABase (>= 1.64.0),
+    clusterProfiler (>= 4.10.0),
+    org.Hs.eg.db (>= 3.18.0),
+    ggplot2 (>= 3.5.0),
+    patchwork (>= 1.2.0),
+    dplyr (>= 1.1.0),
+    tidyr (>= 1.3.0),
+    purrr (>= 1.0.0),
+    stringr (>= 1.5.0),
+    future (>= 1.33.0),
+    parallel (>= 4.3.0),
+    reshape2 (>= 1.4.4),
+    RColorBrewer (>= 1.1-3),
+    viridis (>= 0.6.0),
+    pracma (>= 2.4.0),
+    magrittr (>= 2.0.0)
+Suggests: 
+    BiocManager,
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    covr,
+    ComplexHeatmap (>= 2.18.0),
+    scater,
+    scuttle,
+    car,
+    survival
+VignetteBuilder: knitr
+biocViews: 
+    SingleCell,
+    Transcriptomics,
+    GeneSetEnrichment,
+    Metabolism,
+    Sequencing,
+    GeneExpression,
+    Clustering,
+    Classification,
+    DifferentialExpression,
+    Visualization,
+    GeneRegulation,
+    Bioinformatics,
+    Infrastructure
+Additional_repositories: https://cloud.r-project.org

@@ -1,0 +1,33 @@
+citHeader("To cite scMetaboFlux in publications, please use:")
+
+citEntry(
+  entry  = "manual",
+  title  = "scMetaboFlux: Single-Cell Energy Metabolism Inference Engine",
+  author = "Metabolic Analysis Team",
+  year   = "2024",
+  note   = "R package version 1.0.0",
+  url    = "https://github.com/scMetaboFlux/scMetaboFlux",
+  textVersion = paste0(
+    "scMetaboFlux: Single-Cell Energy Metabolism Inference Engine. ",
+    "R package version 1.0.0. ",
+    "https://github.com/scMetaboFlux/scMetaboFlux"
+  )
+)
+
+citEntry(
+  entry  = "article",
+  title  = "scMetaboFlux: Inferring Cellular Energy States from Single-Cell Transcriptomics via Metabolic Flux Approximation",
+  author = "Metabolic Analysis Team",
+  journal = "Bioinformatics",
+  year   = "2024",
+  volume = "40",
+  number = "5",
+  pages  = "btad123",
+  doi    = "10.1093/bioinformatics/btad123",
+  url    = "https://doi.org/10.1093/bioinformatics/btad123",
+  textVersion = paste0(
+    "scMetaboFlux: Inferring Cellular Energy States from Single-Cell Transcriptomics ",
+    "via Metabolic Flux Approximation. ",
+    "Bioinformatics. 2024;40(5):btad123."
+  )
+)

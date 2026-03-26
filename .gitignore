@@ -1,0 +1,45 @@
+# R specific
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+
+# Compiled files
+*.o
+*.so
+*.dll
+*.dylib
+
+# Package build artifacts
+*.tar.gz
+*.tgz
+.Rcheck/
+scMetaboFlux.Rproj
+*.rds
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.Rproj.user/
+*.Rproj
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# Vignette cache
+vignettes/*.html
+inst/doc/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Package files that shouldn't be tracked
+NAMESPACE.bak

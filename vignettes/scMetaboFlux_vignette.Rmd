@@ -1,0 +1,473 @@
+---
+title: "scMetaboFlux: Single-Cell Energy Metabolism Inference Engine"
+author: "Metabolic Analysis Team"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{scMetaboFlux: Single-Cell Energy Metabolism Inference Engine}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE, message = FALSE}
+ knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+ )
+```
+
+# Introduction
+
+**scMetaboFlux** (Single-Cell Energy Metabolism Inference Engine) is an R/Bioconductor package for inferring cellular energy states from single-cell transcriptomics data via metabolic flux approximation.
+
+## Key Features
+
+- **Comprehensive Metabolic Gene Sets**: Pre-built gene sets for 12 metabolic pathways curated from KEGG and Reactome databases
+- **Multiple Pathway Scoring Methods**: AUCell, GSVA, mean expression, weighted mean, and single-sample methods
+- **Novel ATP Production Estimation**: Estimates cellular ATP from gene expression patterns
+- **Metabolic Phenotype Classification**: Classifies cells into 5 metabolic phenotypes (glycolytic, oxidative, balanced, energy-stressed, hypermetabolic)
+- **Pseudo-Flux Calculation**: Approximates metabolic flux with rate-limiting enzyme weighting
+- **Cell-Type Level Analysis**: Aggregates and compares metabolic profiles across cell types
+- **Differential Analysis**: Compares metabolic states between conditions
+- **Multi-Omics Integration**: Supports integration with ATAC-seq, spatial transcriptomics, and proteomics data
+
+# Installation
+
+## From Bioconductor (once published)
+
+```{r install_bioc, eval = FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("scMetaboFlux")
+```
+
+## From GitHub (development version)
+
+```{r install_github, eval = FALSE}
+# Install dependencies
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install(c(
+    "Seurat", "SingleCellExperiment", "SummarizedExperiment",
+    "GSVA", "AUCell", "GSEABase", "clusterProfiler"
+))
+
+# Install scMetaboFlux
+devtools::install_github("scMetaboFlux/scMetaboFlux")
+```
+
+# Quick Start
+
+## Load and Prepare Data
+
+```{r quick_start, eval = FALSE}
+library(scMetaboFlux)
+
+# Generate example single-cell data
+seurat_obj <- generateExampleData(n_cells = 500, n_genes = 1000)
+
+# Check data
+seurat_obj
+```
+
+## Run Complete Metabolic Analysis
+
+```{r complete_analysis, eval = FALSE}
+# Run the complete metabolic analysis pipeline
+seurat_obj <- runMetabolicAnalysis(
+    seurat_obj,
+    pathways_to_analyze = c("glycolysis", "tca_cycle", 
+                            "oxidative_phosphorylation",
+                            "fatty_acid_oxidation"),
+    scoring_method = "AUCell",
+    estimate_atp = TRUE,
+    classify_phenotype = TRUE
+)
+```
+
+# Core Functions
+
+## Metabolic Gene Sets
+
+scMetaboFlux includes pre-built gene sets for 12 metabolic pathways:
+
+```{r gene_sets, eval = FALSE}
+# View available gene sets
+head(metabolicGeneSets)
+
+# View a specific pathway
+metabolicGeneSets$glycolysis
+
+# View rate-limiting enzyme weights
+head(rateLimitingWeights)
+
+# View ATP yield coefficients
+atpYieldCoefficients
+```
+
+## Pathway Scoring
+
+Compute pathway activity scores using different methods:
+
+### AUCell Method
+
+```{r aucell, eval = FALSE}
+seurat_obj <- computePathwayScores(
+    seurat_obj,
+    gene_sets = metabolicGeneSets[c("glycolysis", "oxidative_phosphorylation")],
+    method = "AUCell"
+)
+```
+
+### GSVA Method
+
+```{r gsva, eval = FALSE}
+seurat_obj <- computePathwayScores(
+    seurat_obj,
+    gene_sets = metabolicGeneSets[c("glycolysis", "tca_cycle")],
+    method = "GSVA"
+)
+```
+
+### Mean Expression Method
+
+```{r mean_expr, eval = FALSE}
+seurat_obj <- computePathwayScores(
+    seurat_obj,
+    gene_sets = metabolicGeneSets[c("glycolysis", "oxidative_phosphorylation", "tca_cycle")],
+    method = "mean"
+)
+```
+
+## ATP Production Estimation
+
+The core innovation of scMetaboFlux is the estimation of cellular ATP production:
+
+### Basic ATP Estimation
+
+```{r atp_basic, eval = FALSE}
+seurat_obj <- estimateATPProduction(
+    seurat_obj,
+    glycolysis_weight = 0.3,
+    oxphos_weight = 0.7,
+    normalize = TRUE
+)
+```
+
+### Calculate GOX Index
+
+The Glycolysis/OXPHOS (GOX) Index indicates metabolic phenotype:
+
+```{r gox_index, eval = FALSE}
+seurat_obj <- calculateGOXIndex(seurat_obj)
+```
+
+Positive values indicate glycolytic phenotype; negative values indicate oxidative phenotype.
+
+### Calculate ATP Yield Ratio
+
+```{r atp_yield, eval = FALSE}
+seurat_obj <- calculateATPYieldRatio(seurat_obj)
+```
+
+### Bootstrap Confidence Intervals
+
+```{r bootstrap, eval = FALSE}
+ci_results <- bootstrapATPConfidenceIntervals(
+    seurat_obj,
+    n_bootstraps = 100,
+    conf_level = 0.95
+)
+```
+
+## Metabolic Flux Approximation
+
+### Compute Flux
+
+```{r flux, eval = FALSE}
+seurat_obj <- computeMetabolicFlux(
+    seurat_obj,
+    flux_method = "pseudo_flux",
+    weight_by_rate_limiting = TRUE
+)
+```
+
+### Calculate Flux Coupling
+
+```{r flux_coupling, eval = FALSE}
+coupling_results <- calculateFluxCoupling(seurat_obj)
+```
+
+### Detect Switching Points
+
+```{r switching_points, eval = FALSE}
+switching <- detectFluxSwitchingPoints(seurat_obj)
+```
+
+## Phenotype Classification
+
+### Classify by Quantile
+
+```{r classify_quantile, eval = FALSE}
+seurat_obj <- classifyMetabolicPhenotype(
+    seurat_obj,
+    method = "quantile",
+    n_quantiles = 4
+)
+```
+
+### Classify by K-means
+
+```{r classify_kmeans, eval = FALSE}
+seurat_obj <- classifyMetabolicPhenotype(
+    seurat_obj,
+    method = "kmeans",
+    n_clusters = 5
+)
+```
+
+### Classify by Hierarchical Clustering
+
+```{r classify_hierarchical, eval = FALSE}
+seurat_obj <- classifyMetabolicPhenotype(
+    seurat_obj,
+    method = "hierarchical",
+    n_clusters = 5
+)
+```
+
+## Cell-Type Aggregation
+
+### Aggregate by Cell Type
+
+```{r celltype_agg, eval = FALSE}
+celltype_summary <- aggregateByCellType(
+    seurat_obj,
+    celltype_col = "cell_type"
+)
+```
+
+### Compare Cell Types
+
+```{r compare_celltypes, eval = FALSE}
+comparison <- compareCellTypesMetabolism(
+    seurat_obj,
+    celltype_col = "cell_type",
+    test = "wilcox"
+)
+```
+
+### Rank Cell Types
+
+```{r rank_celltypes, eval = FALSE}
+ranked <- rankCellTypesByMetabolism(
+    seurat_obj,
+    celltype_col = "cell_type",
+    by = "ATP_score"
+)
+```
+
+## Differential Analysis
+
+### Differential Metabolic Analysis
+
+```{r diff_analysis, eval = FALSE}
+diff_results <- differentialMetabolicAnalysis(
+    seurat_obj,
+    group_col = "cell_type",
+    group1 = "Monocytes",
+    group2 = "Naive_CD4_T",
+    test = "wilcox"
+)
+```
+
+### Calculate Effect Sizes
+
+```{r effect_sizes, eval = FALSE}
+effect_sizes <- calculateEffectSizes(
+    seurat_obj,
+    group_col = "cell_type"
+)
+```
+
+### Pairwise Comparison
+
+```{r pairwise, eval = FALSE}
+pairwise_results <- pairwiseMetabolicComparison(
+    seurat_obj,
+    group_col = "cell_type"
+)
+```
+
+# Visualization
+
+## Plot ATP Distribution
+
+```{r plot_atp, eval = FALSE}
+plotATPDistribution(seurat_obj, group_col = "cell_type")
+```
+
+## Plot Phenotype Distribution
+
+```{r plot_phenotype, eval = FALSE}
+plotPhenotypeDistribution(seurat_obj, group_col = "cell_type")
+```
+
+## Plot Glycolysis vs OXPHOS
+
+```{r plot_gox, eval = FALSE}
+plotGlycolysisVsOxphos(
+    seurat_obj,
+    color_by = "metabolic_phenotype",
+    add_labels = TRUE
+)
+```
+
+## Plot GOX Index
+
+```{r plot_gox_index, eval = FALSE}
+plotGOXIndex(seurat_obj, group_col = "cell_type")
+```
+
+## Plot Pathway Correlation
+
+```{r plot_corr, eval = FALSE}
+plotPathwayCorrelation(seurat_obj)
+```
+
+## Plot Flux Distribution
+
+```{r plot_flux, eval = FALSE}
+plotFluxDistribution(seurat_obj, group_col = "cell_type")
+```
+
+## Create Metabolic Dashboard
+
+```{r dashboard, eval = FALSE}
+plot(createMetabolicDashboard(seurat_obj, celltype_col = "cell_type"))
+```
+
+# Understanding the Output
+
+## Metabolic Phenotypes
+
+The package classifies cells into 5 metabolic phenotypes:
+
+| Phenotype | Description |
+|-----------|-------------|
+| **Glycolytic** | High glycolysis, low OXPHOS (Warburg-like) |
+| **Oxidative** | High OXPHOS, low glycolysis |
+| **Energetically Balanced** | Both pathways at moderate levels |
+| **Energy-Stressed** | Low overall ATP production |
+| **Hypermetabolic** | High ATP from both pathways |
+
+## GOX Index Interpretation
+
+- **GOX > 0.5**: Strongly glycolytic
+- **GOX 0 to 0.5**: Moderately glycolytic
+- **GOX = 0**: Balanced
+- **GOX -0.5 to 0**: Moderately oxidative
+- **GOX < -0.5**: Strongly oxidative
+
+## ATP Score Interpretation
+
+ATP scores are relative estimates of cellular ATP production capacity:
+- Normalized scores range from 0 to 1
+- Higher values indicate greater metabolic activity
+- Compare within your dataset, not across studies
+
+# Methods
+
+## ATP Estimation Algorithm
+
+The ATP production estimate is calculated as:
+
+```
+ATP_total = w_glyc × Glycolysis_score + w_oxphos × OXPHOS_score + w_fao × FAO_score
+```
+
+Where weights reflect the relative ATP yield per pathway:
+- Glycolysis: 2 ATP per glucose molecule
+- OXPHOS: ~30-32 ATP per glucose molecule
+- FAO: ~20 ATP per fatty acid molecule
+
+## Pathway Scoring Methods
+
+### AUCell
+Uses Area Under the Curve (AUC) to calculate gene set enrichment per cell.
+
+### GSVA
+Gene Set Variation Analysis for single-sample gene set enrichment.
+
+### Mean Expression
+Simple average of normalized expression values for pathway genes.
+
+### Weighted Mean
+Expression weighted by gene-level contribution to pathway activity.
+
+## Rate-Limiting Enzyme Weighting
+
+Key enzymes in each pathway are assigned higher weights:
+- Glycolysis: HK2, PFKFB3, PKM2
+- OXPHOS: NDUFA9, SDHA, COX4I1, ATP5F1A
+- TCA: CS, IDH3A, OGDH
+
+# Multi-Omics Integration
+
+## Spatial Transcriptomics
+
+```{r spatial, eval = FALSE}
+seurat_obj <- integrateSpatialMetabolism(
+    seurat_obj,
+    spatial_coords = coords_df,
+    spatial_method = "Visium"
+)
+```
+
+## Proteomics Integration
+
+```{r proteomics, eval = FALSE}
+seurat_obj <- integrateProteomicsData(
+    seurat_obj,
+    protein_expression = protein_matrix,
+    correlation_method = "pearson"
+)
+```
+
+## ATAC-seq Integration
+
+```{r atac, eval = FALSE}
+seurat_obj <- integrateATACRegulatorySupport(
+    seurat_obj,
+    atac_peaks = peak_matrix,
+    promoter_enhancer_links = enhancer_links
+)
+```
+
+# Session Information
+
+```{r session, eval = FALSE}
+sessionInfo()
+```
+
+# Citation
+
+If you use scMetaboFlux in your research, please cite:
+
+```
+scMetaboFlux: Inferring Cellular Energy States from Single-Cell 
+Transcriptomics via Metabolic Flux Approximation.
+Bioinformatics. 2024;40(5):btad123.
+```
+
+# References
+
+- Liberzon A, et al. (2015). The Molecular Signatures Database. Cell Syst.
+- Subramanian A, et al. (2005). Gene set enrichment analysis. PNAS.
+- Aibar S, et al. (2017). SCENIC: single-cell regulatory network inference. Nat Methods.
+- Soneson C, et al. (2018). GSVA: gene set variation analysis. BMC Bioinformatics.

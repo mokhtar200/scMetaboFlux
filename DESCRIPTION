@@ -19,7 +19,7 @@ Description: Inferring cellular energy states from single-cell transcriptomics v
     (4) Pseudo-flux calculation with rate-limiting enzyme weighting;
     (5) Classification of cells into 5 metabolic phenotypes;
     (6) Comprehensive visualization and differential analysis tools.
-License: MIT
+License: Artistic-2.0
 URL: https://github.com/scMetaboFlux/scMetaboFlux
 BugReports: https://github.com/scMetaboFlux/scMetaboFlux/issues
 Encoding: UTF-8

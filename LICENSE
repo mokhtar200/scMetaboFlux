@@ -1,21 +1,158 @@
-MIT License
+The Artistic License 2.0
 
-Copyright (c) 2024 scMetaboFlux
+Copyright (c) 2000-2006, The Perl Foundation.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Everyone is permitted to copy and distribute verbatim copies of this
+license document, but changing it is not allowed.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Preamble
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This license establishes the terms under which a "Package" may be copied,
+modified, distributed, and/or redistributed. The intent is that the
+Copyright Holder maintains some artistic or stylistic control over the
+development of the Package, while giving the recipients of the Package
+sufficient rights to use and distribute the Package in a reasonably
+convenient manner.
+
+Definitions
+
+"Copyright Holder" means the author(s) of the base Package, and any
+other entity that may hold copyright in the Package.
+
+"Modified Package" means a Package that has been edited, modified, or
+augmented by someone other than the Copyright Holder.
+
+"You" and "your" means the person who would like to copy, distribute,
+or modify the Package.
+
+"Package" means the collection of files distributed by the Copyright Holder,
+including documentation, source code, data, files in standard archival
+formats (e.g., .tar.gz, .zip, etc.), and any supporting scripts,
+applications, or documentation.
+
+"Standard Version" refers to such a Package if it has not been modified,
+or has been modified in accordance with the wishes of the Copyright Holder.
+
+"Modified Version" refers to the Package, if any, that is being distributed
+and/or modified by you.
+
+"Standardized Resource" means any file, directory, or other resource
+that is distributed with the Package, including any modifications that
+you make.
+
+Grant of Rights
+
+Subject to the terms and conditions of this License, the Copyright Holder
+hereby grants you a world-wide, royalty-free, non-exclusive, perpetual
+(right of license) license to exercise the rights in the Package as
+follows:
+
+a) You may copy and distribute verbatim copies of the Standard Version
+   of the Package in any medium, in original or modified form, provided
+   that you include a copy of this License with each copy distributed.
+
+b) You may apply bug fixes, portability fixes, and other modifications
+   derived from the Public Domain or from the Copyright Holder. A Modified
+   Version may also be a collective work based on the Package.
+
+c) You may reproduce, modify, publicly display, publicly perform,
+   distribute, and sublicense the Package, either in its original form
+   or as a Modified Version, for any purpose, commercial or non-commercial.
+
+d) You may charge a fee for the physical act of transferring a copy,
+   and you may at your option offer warranty protection in exchange for a
+   fee.
+
+e) You may distribute the Package, with or without modifications,
+   provided that you:
+   i)  conspicuously and appropriately publish on each copy an appropriate
+       copyright notice and disclaimer of warranty;
+   ii) keep intact all notices that refer to this License and to the
+       absence of any warranty;
+   iii) give all recipients of the Package a copy of this License along
+        with the Package; and
+   iv) require any Modified Version to carry prominent notices stating
+       that the Modified Version is not the Standard Version.
+
+f) You may distribute the Package under your own license terms, provided
+   that those terms do not attempt to limit or alter the recipients' rights
+   in the Package under this License.
+
+g) You may embed the Package within your own Package, provided that you
+   include all of the files from the Package in your Package's distribution.
+
+h) You may create and distribute a Modified Version of the Package,
+   including its documentation, under your own license terms, provided that:
+   i)  you leave the copyright notices in the Modified Version intact;
+   ii) you provide a file that clearly describes the nature and purpose
+       of the Modified Version;
+   iii) you retain all import statements that require the Package; and
+   iv) you do not remove any import statements from the Package.
+
+i) You may create a "fork" of the Package under this License, provided
+   that you clearly mark your fork as a fork of the Package.
+
+Restrictions
+
+You may not copy, modify, sublicense, distribute, or transfer the Package
+except as expressly provided under this License. Any attempt otherwise to
+copy, modify, sublicense, distribute, or transfer the Package is void, and
+will automatically terminate your rights under this License. However,
+parties who have received copies, or rights, from you under this License
+will not have their licenses terminated so long as such parties remain in
+full compliance.
+
+You are not required to accept this License, since you have not signed
+it. However, nothing else grants you permission to copy, distribute, or
+modify the Package or its derivative works. These actions are prohibited
+by law if you do not accept this License. Therefore, by copying,
+modifying, distributing, or transferring the Package, you indicate your
+acceptance of this License and all of its terms and conditions.
+
+THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+The License Conditions
+
+You acknowledge that the Package is provided under the terms of this
+License, except as otherwise provided. You may not use the name,
+trademark, or service mark of the Copyright Holder or any of its
+subsidiaries or affiliates to endorse or promote products derived from
+this Package without specific prior written permission from the Copyright
+Holder.
+
+For more information, contact:
+
+The Perl Foundation
+c/o Software Library
+1287 Northglenn Ct. #105-367
+Arvada, CO 80005
+USA
+
+Disclaimer of Warranty
+
+THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS IS"
+AND WITHOUT ANY WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE PACKAGE OR THE USE OR OTHER DEALINGS IN THE PACKAGE.
+
+Termination
+
+This License becomes null and void if:
+a) You fail to comply with any term or condition of this License; or
+b) You or any third party causes the Package to become ineligible for
+   distribution under this License; or
+c) The Copyright Holder revokes this License.
+
+If you become unable to distribute the Package, your rights under this
+License terminate automatically. However, any sublicenses that you have
+granted prior to termination shall survive termination.
+
+Governing Law
+
+This License shall be governed by the laws of the United States and the
+State of Colorado, without regard to conflicts of law provisions.

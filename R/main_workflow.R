@@ -47,11 +47,20 @@ runMetabolicAnalysis <- function(seurat_obj,
                                 cell_type_col = NULL,
                                 condition_col = NULL,
                                 compute_flux = TRUE,
-                                parallel_cores = 1,
+                                parallel_cores = NULL,
                                 verbose = TRUE) {
   
   organism <- match.arg(organism)
   scoring_method <- match.arg(scoring_method)
+  
+  if (is.null(parallel_cores)) {
+    parallel_cores <- max(1, parallel::detectCores() - 1)
+  }
+  parallel_cores <- min(parallel_cores, parallel::detectCores())
+  
+  if (verbose && parallel_cores > 1) {
+    message("[scMetaboFlux] Using ", parallel_cores, " cores for parallel processing")
+  }
   
   if (!inherits(seurat_obj, "Seurat")) {
     stop("seurat_obj must be a Seurat object")

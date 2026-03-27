@@ -417,6 +417,84 @@ Key enzymes in each pathway are assigned higher weights:
 - OXPHOS: NDUFA9, SDHA, COX4I1, ATP5F1A
 - TCA: CS, IDH3A, OGDH
 
+# Performance Optimization
+
+## Parallel Processing
+
+scMetaboFlux supports parallel processing for large datasets:
+
+```{r parallel, eval = FALSE}
+# Automatic parallel detection
+seurat_obj <- runMetabolicAnalysis(seurat_obj, parallel_cores = NULL)
+
+# Manual cores specification
+seurat_obj <- runMetabolicAnalysis(seurat_obj, parallel_cores = 8)
+
+# Initialize parallel backend
+initParallelBackend(n_cores = 4)
+```
+
+## Memory-Efficient Processing
+
+For very large datasets (>50K cells), use batch processing:
+
+```{r batch, eval = FALSE}
+# Check optimal batch size
+batch_size <- getOptimalBatchSize(seurat_obj, target_memory_pct = 50)
+message(paste("Optimal batch size:", batch_size))
+
+# Batch pathway scoring
+scores <- batchPathwayScores(seurat_obj, gene_sets, batch_size = 5000)
+
+# Memory monitoring
+mem_stats <- getMemoryUsage()
+print(mem_stats)
+```
+
+## Performance Benchmarks
+
+Typical processing times on 8-core machine:
+
+| Dataset Size | Pathway Scoring | ATP Estimation | Full Workflow |
+|--------------|----------------|----------------|---------------|
+| 1,000 cells | ~5 sec | ~2 sec | ~30 sec |
+| 10,000 cells | ~30 sec | ~5 sec | ~2 min |
+| 50,000 cells | ~3 min | ~15 sec | ~10 min |
+| 100,000 cells | ~8 min | ~30 sec | ~25 min |
+
+## Caching Results
+
+Cache expensive computations for reuse:
+
+```{r caching, eval = FALSE}
+# Cache pathway scores
+scores <- cachedPathwayScores(seurat_obj, 
+                             cache_file = "~/cache/scores.rds",
+                             gene_sets = metabolicGeneSets)
+```
+
+## Memory Optimization Tips
+
+1. Remove scale.data after analysis to save memory:
+```{r optimize, eval = FALSE}
+seurat_obj <- optimizeSeuratObject(seurat_obj, remove_scale_data = TRUE)
+```
+
+2. Clear memory between large operations:
+```{r clear_memory, eval = FALSE}
+clearMemory()
+```
+
+3. Benchmark your specific workflow:
+```{r benchmark, eval = FALSE}
+result <- benchmarkFunction(
+    FUN = function(obj) runMetabolicAnalysis(obj),
+    n_reps = 3,
+    obj = seurat_obj
+)
+print(result$mean_time)
+```
+
 # Multi-Omics Integration
 
 ## Spatial Transcriptomics

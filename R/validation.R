@@ -1,7 +1,8 @@
 #' @title Run Comprehensive Test Scenarios for scMetaboFlux
 #'
 #' @description Runs test scenarios with various simulated datasets
-#' to validate package functionality.
+#' to validate package functionality. For comprehensive Bioconductor
+#' submission testing, see \code{\link{runBioconductorValidationTests}}.
 #'
 #' @param verbose Print progress messages
 #' @param stop_on_error Stop if any test fails
@@ -12,6 +13,10 @@
 #' \dontrun{
 #' results <- runTestScenarios()
 #' }
+#'
+#' @seealso \code{\link{runBioconductorValidationTests}} for comprehensive
+#' Bioconductor-compliant validation testing including large datasets,
+#' performance benchmarks, and edge cases.
 runTestScenarios <- function(verbose = TRUE, stop_on_error = FALSE) {
   
   if (!requireNamespace("Seurat", quietly = TRUE)) {

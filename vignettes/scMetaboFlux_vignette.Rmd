@@ -1,6 +1,6 @@
 ---
 title: "scMetaboFlux: Single-Cell Energy Metabolism Inference Engine"
-author: "Metabolic Analysis Team"
+author: "Ahmed Mokhtar Ramzy Salem"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:

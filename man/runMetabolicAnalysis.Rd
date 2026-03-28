@@ -13,7 +13,7 @@ runMetabolicAnalysis(
   cell_type_col = NULL,
   condition_col = NULL,
   compute_flux = TRUE,
-  parallel_cores = 1,
+  parallel_cores = NULL,
   verbose = TRUE
 )
 }

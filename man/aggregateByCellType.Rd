@@ -10,7 +10,8 @@ aggregateByCellType(
   score_cols = NULL,
   include_sd = TRUE,
   include_sem = TRUE,
-  include_ci = FALSE
+  include_ci = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ aggregateByCellType(
 \item{include_sem}{Include standard error of mean}
 
 \item{include_ci}{Include 95\% confidence interval}
+
+\item{verbose}{Print progress messages}
 }
 \value{
 Data frame with aggregated statistics per cell type

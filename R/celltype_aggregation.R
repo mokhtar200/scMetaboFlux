@@ -15,6 +15,7 @@ NULL
 #' @param include_sd Include standard deviation
 #' @param include_sem Include standard error of mean
 #' @param include_ci Include 95% confidence interval
+#' @param verbose Print progress messages
 #' 
 #' @return Data frame with aggregated statistics per cell type
 #' 
@@ -31,7 +32,8 @@ aggregateByCellType <- function(seurat_obj,
                                 score_cols = NULL,
                                 include_sd = TRUE,
                                 include_sem = TRUE,
-                                include_ci = FALSE) {
+                                include_ci = FALSE,
+                                verbose = TRUE) {
   
   if (!inherits(seurat_obj, "Seurat")) {
     stop("seurat_obj must be a Seurat object")

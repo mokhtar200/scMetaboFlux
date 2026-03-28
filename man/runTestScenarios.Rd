@@ -16,10 +16,17 @@ List of test results
 }
 \description{
 Runs test scenarios with various simulated datasets
-to validate package functionality.
+to validate package functionality. For comprehensive Bioconductor
+submission testing, see \code{\link{runBioconductorValidationTests}}.
 }
 \examples{
 \dontrun{
 results <- runTestScenarios()
 }
+
+}
+\seealso{
+\code{\link{runBioconductorValidationTests}} for comprehensive
+Bioconductor-compliant validation testing including large datasets,
+performance benchmarks, and edge cases.
 }

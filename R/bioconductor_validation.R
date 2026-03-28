@@ -186,7 +186,7 @@ testLargeDataset <- function(verbose = TRUE) {
     if ("ATP_score" %in% colnames(obj@meta.data) && 
         length(obj@meta.data$ATP_score) == n_cells) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ 10K cells processed successfully")
+      if (verbose) message("  [OK] 10K cells processed successfully")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "10K cells: ATP scores not computed correctly"
@@ -194,7 +194,7 @@ testLargeDataset <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("10K cells:", e$message)
-    if (verbose) message(paste("  ✗ 10K cells:", e$message))
+    if (verbose) message(paste("  [X] 10K cells:", e$message))
   })
   
   # Test 1.2: 20,000 cells with parallel processing
@@ -219,7 +219,7 @@ testLargeDataset <- function(verbose = TRUE) {
     
     if ("glycolysis" %in% colnames(obj@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ 20K cells with AUCell processed successfully")
+      if (verbose) message("  [OK] 20K cells with AUCell processed successfully")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "20K cells: AUCell scoring failed"
@@ -227,7 +227,7 @@ testLargeDataset <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("20K cells:", e$message)
-    if (verbose) message(paste("  ✗ 20K cells:", e$message))
+    if (verbose) message(paste("  [X] 20K cells:", e$message))
   })
   
   # Test 1.3: Many features (genes)
@@ -261,7 +261,7 @@ testLargeDataset <- function(verbose = TRUE) {
     
     if (nrow(obj@meta.data) == n_cells) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ 10K genes processed successfully")
+      if (verbose) message("  [OK] 10K genes processed successfully")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "10K genes: Processing failed"
@@ -269,7 +269,7 @@ testLargeDataset <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("10K genes:", e$message)
-    if (verbose) message(paste("  ✗ 10K genes:", e$message))
+    if (verbose) message(paste("  [X] 10K genes:", e$message))
   })
   
   return(list(n_tests = n_tests, n_passed = n_passed, n_failed = n_failed, 
@@ -312,7 +312,7 @@ testSparseMatrices <- function(verbose = TRUE) {
     if (inherits(obj@assays$RNA@data, "sparseMatrix") && 
         "glycolysis" %in% colnames(obj@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Highly sparse matrix (95%) handled correctly")
+      if (verbose) message("  [OK] Highly sparse matrix (95%) handled correctly")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Sparse matrix: Result not sparse"
@@ -320,7 +320,7 @@ testSparseMatrices <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Sparse matrix:", e$message)
-    if (verbose) message(paste("  ✗ Sparse matrix:", e$message))
+    if (verbose) message(paste("  [X] Sparse matrix:", e$message))
   })
   
   # Test 2.2: dgCMatrix format preservation
@@ -339,11 +339,11 @@ testSparseMatrices <- function(verbose = TRUE) {
     obj <- computePathwayScores(obj, method = "mean", verbose = FALSE)
     
     n_passed <- n_passed + 1
-    if (verbose) message("  ✓ dgCMatrix format preserved")
+    if (verbose) message("  [OK] dgCMatrix format preserved")
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("dgCMatrix:", e$message)
-    if (verbose) message(paste("  ✗ dgCMatrix:", e$message))
+    if (verbose) message(paste("  [X] dgCMatrix:", e$message))
   })
   
   # Test 2.3: Dense to sparse conversion
@@ -358,11 +358,11 @@ testSparseMatrices <- function(verbose = TRUE) {
     obj <- computePathwayScores(obj, method = "mean", verbose = FALSE)
     
     n_passed <- n_passed + 1
-    if (verbose) message("  ✓ Dense matrix conversion handled")
+    if (verbose) message("  [OK] Dense matrix conversion handled")
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Dense matrix:", e$message)
-    if (verbose) message(paste("  ✗ Dense matrix:", e$message))
+    if (verbose) message(paste("  [X] Dense matrix:", e$message))
   })
   
   return(list(n_tests = n_tests, n_passed = n_passed, n_failed = n_failed,
@@ -392,7 +392,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
     na_count <- sum(is.na(result@meta.data$ATP_score))
     if (na_count == 0 && "ATP_score" %in% colnames(result@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ NA values handled in ATP estimation")
+      if (verbose) message("  [OK] NA values handled in ATP estimation")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "NA handling: NAs not properly handled"
@@ -400,7 +400,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("NA handling:", e$message)
-    if (verbose) message(paste("  ✗ NA handling:", e$message))
+    if (verbose) message(paste("  [X] NA handling:", e$message))
   })
   
   # Test 3.2: NaN values
@@ -415,7 +415,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
     
     if (nan_count == 0) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ NaN values handled correctly")
+      if (verbose) message("  [OK] NaN values handled correctly")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "NaN handling: NaNs remain"
@@ -423,7 +423,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("NaN handling:", e$message)
-    if (verbose) message(paste("  ✗ NaN handling:", e$message))
+    if (verbose) message(paste("  [X] NaN handling:", e$message))
   })
   
   # Test 3.3: Inf values
@@ -439,7 +439,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
     
     if (inf_count == 0) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Inf values handled correctly")
+      if (verbose) message("  [OK] Inf values handled correctly")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Inf handling: Infs remain"
@@ -447,7 +447,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Inf handling:", e$message)
-    if (verbose) message(paste("  ✗ Inf handling:", e$message))
+    if (verbose) message(paste("  [X] Inf handling:", e$message))
   })
   
   # Test 3.4: Empty cell types
@@ -462,7 +462,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
     
     if (is.data.frame(result) && nrow(result) > 0) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Rare cell types handled correctly")
+      if (verbose) message("  [OK] Rare cell types handled correctly")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Rare cells: Aggregation failed"
@@ -470,7 +470,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Rare cells:", e$message)
-    if (verbose) message(paste("  ✗ Rare cells:", e$message))
+    if (verbose) message(paste("  [X] Rare cells:", e$message))
   })
   
   # Test 3.5: All zeros in a pathway
@@ -486,7 +486,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
     if ("GOX_index" %in% colnames(result@meta.data) &&
         all(!is.na(result@meta.data$GOX_index))) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Zero values handled correctly")
+      if (verbose) message("  [OK] Zero values handled correctly")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Zero values: Processing failed"
@@ -494,7 +494,7 @@ testMissingDataHandling <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Zero values:", e$message)
-    if (verbose) message(paste("  ✗ Zero values:", e$message))
+    if (verbose) message(paste("  [X] Zero values:", e$message))
   })
   
   return(list(n_tests = n_tests, n_passed = n_passed, n_failed = n_failed,
@@ -524,7 +524,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
     
     if ("metabolic_phenotype" %in% colnames(result@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Uniform data classification works")
+      if (verbose) message("  [OK] Uniform data classification works")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Uniform: Classification failed"
@@ -532,7 +532,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Uniform:", e$message)
-    if (verbose) message(paste("  ✗ Uniform:", e$message))
+    if (verbose) message(paste("  [X] Uniform:", e$message))
   })
   
   # Test 4.2: K-means classification
@@ -546,7 +546,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
     phenotypes <- result@meta.data$metabolic_phenotype
     if (length(unique(phenotypes)) <= 5 && "metabolic_phenotype" %in% colnames(result@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ K-means classification works")
+      if (verbose) message("  [OK] K-means classification works")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "K-means: Wrong number of phenotypes"
@@ -554,7 +554,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("K-means:", e$message)
-    if (verbose) message(paste("  ✗ K-means:", e$message))
+    if (verbose) message(paste("  [X] K-means:", e$message))
   })
   
   # Test 4.3: Hierarchical classification
@@ -567,7 +567,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
     
     if ("metabolic_phenotype" %in% colnames(result@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Hierarchical classification works")
+      if (verbose) message("  [OK] Hierarchical classification works")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Hierarchical: Classification failed"
@@ -575,7 +575,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Hierarchical:", e$message)
-    if (verbose) message(paste("  ✗ Hierarchical:", e$message))
+    if (verbose) message(paste("  [X] Hierarchical:", e$message))
   })
   
   # Test 4.4: GOX index classification
@@ -588,7 +588,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
     
     if ("metabolic_phenotype" %in% colnames(result@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ GOX index classification works")
+      if (verbose) message("  [OK] GOX index classification works")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "GOX: Classification failed"
@@ -596,7 +596,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("GOX:", e$message)
-    if (verbose) message(paste("  ✗ GOX:", e$message))
+    if (verbose) message(paste("  [X] GOX:", e$message))
   })
   
   # Test 4.5: Phenotype purity calculation
@@ -611,7 +611,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
     
     if (is.data.frame(purity) && "purity" %in% colnames(purity)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Phenotype purity calculation works")
+      if (verbose) message("  [OK] Phenotype purity calculation works")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Purity: Calculation failed"
@@ -619,7 +619,7 @@ testClassificationEdgeCases <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Purity:", e$message)
-    if (verbose) message(paste("  ✗ Purity:", e$message))
+    if (verbose) message(paste("  [X] Purity:", e$message))
   })
   
   return(list(n_tests = n_tests, n_passed = n_passed, n_failed = n_failed,
@@ -652,7 +652,7 @@ testAllScoringMethods <- function(verbose = TRUE) {
       
       if (has_scores && valid_scores) {
         n_passed <- n_passed + 1
-        if (verbose) message(paste0("  ✓ Scoring method '", method, "' works"))
+        if (verbose) message(paste0("  [OK] Scoring method '", method, "' works"))
       } else {
         n_failed <<- n_failed + 1
         errors[[length(errors) + 1]] <<- paste(method, "scoring: Invalid scores")
@@ -660,7 +660,7 @@ testAllScoringMethods <- function(verbose = TRUE) {
     }, error = function(e) {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- paste(method, "scoring:", e$message)
-      if (verbose) message(paste0("  ✗ Scoring method '", method, "': ", e$message))
+      if (verbose) message(paste0("  [X] Scoring method '", method, "': ", e$message))
     })
   }
   
@@ -674,7 +674,7 @@ testAllScoringMethods <- function(verbose = TRUE) {
     
     if ("glycolysis" %in% colnames(result@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Single sample scoring works")
+      if (verbose) message("  [OK] Single sample scoring works")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Single sample: Failed"
@@ -682,7 +682,7 @@ testAllScoringMethods <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Single sample:", e$message)
-    if (verbose) message(paste("  ✗ Single sample:", e$message))
+    if (verbose) message(paste("  [X] Single sample:", e$message))
   })
   
   return(list(n_tests = n_tests, n_passed = n_passed, n_failed = n_failed,
@@ -715,7 +715,7 @@ testPerformanceBenchmarks <- function(verbose = TRUE) {
     
     if (duration < 30) {  # Should complete in under 30 seconds for 5K cells
       n_passed <- n_passed + 1
-      if (verbose) message(paste0("  ✓ Pathway scoring (5K cells): ", round(duration, 2), "s"))
+      if (verbose) message(paste0("  [OK] Pathway scoring (5K cells): ", round(duration, 2), "s"))
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- paste("Performance: Scoring too slow", duration, "s")
@@ -723,7 +723,7 @@ testPerformanceBenchmarks <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Benchmark 1:", e$message)
-    if (verbose) message(paste("  ✗ Benchmark 1:", e$message))
+    if (verbose) message(paste("  [X] Benchmark 1:", e$message))
   })
   
   # Benchmark 2: ATP estimation speed
@@ -741,7 +741,7 @@ testPerformanceBenchmarks <- function(verbose = TRUE) {
     
     if (duration < 10) {  # Should be fast
       n_passed <- n_passed + 1
-      if (verbose) message(paste0("  ✓ ATP estimation (5K cells): ", round(duration, 2), "s"))
+      if (verbose) message(paste0("  [OK] ATP estimation (5K cells): ", round(duration, 2), "s"))
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- paste("Performance: ATP too slow", duration, "s")
@@ -749,7 +749,7 @@ testPerformanceBenchmarks <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Benchmark 2:", e$message)
-    if (verbose) message(paste("  ✗ Benchmark 2:", e$message))
+    if (verbose) message(paste("  [X] Benchmark 2:", e$message))
   })
   
   # Benchmark 3: Cell type aggregation speed
@@ -768,7 +768,7 @@ testPerformanceBenchmarks <- function(verbose = TRUE) {
     
     if (duration < 15) {
       n_passed <- n_passed + 1
-      if (verbose) message(paste0("  ✓ Cell-type aggregation (3K cells): ", round(duration, 2), "s"))
+      if (verbose) message(paste0("  [OK] Cell-type aggregation (3K cells): ", round(duration, 2), "s"))
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- paste("Performance: Aggregation too slow", duration, "s")
@@ -776,7 +776,7 @@ testPerformanceBenchmarks <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Benchmark 3:", e$message)
-    if (verbose) message(paste("  ✗ Benchmark 3:", e$message))
+    if (verbose) message(paste("  [X] Benchmark 3:", e$message))
   })
   
   # Benchmark 4: Full workflow speed
@@ -797,7 +797,7 @@ testPerformanceBenchmarks <- function(verbose = TRUE) {
     
     if (duration < 60) {  # Full workflow under 1 minute for 2K cells
       n_passed <- n_passed + 1
-      if (verbose) message(paste0("  ✓ Full workflow (2K cells): ", round(duration, 2), "s"))
+      if (verbose) message(paste0("  [OK] Full workflow (2K cells): ", round(duration, 2), "s"))
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- paste("Performance: Workflow too slow", duration, "s")
@@ -805,7 +805,7 @@ testPerformanceBenchmarks <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Benchmark 4:", e$message)
-    if (verbose) message(paste("  ✗ Benchmark 4:", e$message))
+    if (verbose) message(paste("  [X] Benchmark 4:", e$message))
   })
   
   return(list(n_tests = n_tests, n_passed = n_passed, n_failed = n_failed,
@@ -842,7 +842,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
       
       if ("glycolysis" %in% colnames(obj@meta.data)) {
         n_passed <- n_passed + 1
-        if (verbose) message("  ✓ Integration with SCTransform works")
+        if (verbose) message("  [OK] Integration with SCTransform works")
       } else {
         n_failed <<- n_failed + 1
         errors[[length(errors) + 1]] <<- "SCTransform: Scores not computed"
@@ -851,7 +851,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("SCTransform:", e$message)
-    if (verbose) message(paste("  ✗ SCTransform:", e$message))
+    if (verbose) message(paste("  [X] SCTransform:", e$message))
   })
   
   # Test 7.2: Integration with multiple assays
@@ -869,7 +869,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
     
     if (Seurat::DefaultAssay(obj) == "RNA" && "glycolysis" %in% colnames(obj@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Multiple assays integration works")
+      if (verbose) message("  [OK] Multiple assays integration works")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Assays: Integration failed"
@@ -877,7 +877,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Assays:", e$message)
-    if (verbose) message(paste("  ✗ Assays:", e$message))
+    if (verbose) message(paste("  [X] Assays:", e$message))
   })
   
   # Test 7.3: Integration with reductions
@@ -896,7 +896,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
     
     if (has_reductions && has_scores) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Reductions preserved during scoring")
+      if (verbose) message("  [OK] Reductions preserved during scoring")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Reductions: Not preserved"
@@ -904,7 +904,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Reductions:", e$message)
-    if (verbose) message(paste("  ✗ Reductions:", e$message))
+    if (verbose) message(paste("  [X] Reductions:", e$message))
   })
   
   # Test 7.4: Integration with labels and metadata
@@ -928,7 +928,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
     
     if (meta_preserved && scores_computed) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Metadata preserved during analysis")
+      if (verbose) message("  [OK] Metadata preserved during analysis")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Metadata: Not preserved"
@@ -936,7 +936,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Metadata:", e$message)
-    if (verbose) message(paste("  ✗ Metadata:", e$message))
+    if (verbose) message(paste("  [X] Metadata:", e$message))
   })
   
   # Test 7.5: Reset and recompute
@@ -956,7 +956,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
     
     if (length(metabolic_cols) == 0 && !"ATP_score" %in% colnames(obj@meta.data)) {
       n_passed <- n_passed + 1
-      if (verbose) message("  ✓ Reset and recompute workflow works")
+      if (verbose) message("  [OK] Reset and recompute workflow works")
     } else {
       n_failed <<- n_failed + 1
       errors[[length(errors) + 1]] <<- "Reset: Failed to remove scores"
@@ -964,7 +964,7 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
   }, error = function(e) {
     n_failed <<- n_failed + 1
     errors[[length(errors) + 1]] <<- paste("Reset:", e$message)
-    if (verbose) message(paste("  ✗ Reset:", e$message))
+    if (verbose) message(paste("  [X] Reset:", e$message))
   })
   
   return(list(n_tests = n_tests, n_passed = n_passed, n_failed = n_failed,
@@ -989,7 +989,7 @@ testErrorHandling <- function(verbose = TRUE) {
     errors[[length(errors) + 1]] <<- "Error handling: Should have failed for invalid input"
   }, error = function(e) {
     n_passed <<- n_passed + 1
-    if (verbose) message("  ✓ Invalid input error caught")
+    if (verbose) message("  [OK] Invalid input error caught")
   })
   
   # Test 8.2: Non-existent column
@@ -1004,7 +1004,7 @@ testErrorHandling <- function(verbose = TRUE) {
     errors[[length(errors) + 1]] <<- "Error handling: Should have failed for missing column"
   }, error = function(e) {
     n_passed <<- n_passed + 1
-    if (verbose) message("  ✓ Missing column error caught")
+    if (verbose) message("  [OK] Missing column error caught")
   })
   
   # Test 8.3: Invalid method
@@ -1018,7 +1018,7 @@ testErrorHandling <- function(verbose = TRUE) {
     errors[[length(errors) + 1]] <<- "Error handling: Should have failed for invalid method"
   }, error = function(e) {
     n_passed <<- n_passed + 1
-    if (verbose) message("  ✓ Invalid method error caught")
+    if (verbose) message("  [OK] Invalid method error caught")
   })
   
   # Test 8.4: Empty dataset
@@ -1031,7 +1031,7 @@ testErrorHandling <- function(verbose = TRUE) {
     errors[[length(errors) + 1]] <<- "Error handling: Should have failed for empty dataset"
   }, error = function(e) {
     n_passed <<- n_passed + 1
-    if (verbose) message("  ✓ Empty dataset error caught")
+    if (verbose) message("  [OK] Empty dataset error caught")
   })
   
   # Test 8.5: Zero cells
@@ -1044,7 +1044,7 @@ testErrorHandling <- function(verbose = TRUE) {
     errors[[length(errors) + 1]] <<- "Error handling: Should have failed for zero cells"
   }, error = function(e) {
     n_passed <<- n_passed + 1
-    if (verbose) message("  ✓ Zero cells error caught")
+    if (verbose) message("  [OK] Zero cells error caught")
   })
   
   # Test 8.6: Wrong data type for scores
@@ -1057,10 +1057,10 @@ testErrorHandling <- function(verbose = TRUE) {
     result <- calculateGOXIndex(obj, verbose = FALSE)
     # Should handle gracefully or convert
     n_passed <<- n_passed + 1
-    if (verbose) message("  ✓ Wrong data type handled")
+    if (verbose) message("  [OK] Wrong data type handled")
   }, error = function(e) {
     n_passed <<- n_passed + 1
-    if (verbose) message("  ✓ Wrong data type error caught")
+    if (verbose) message("  [OK] Wrong data type error caught")
   })
   
   return(list(n_tests = n_tests, n_passed = n_passed, n_failed = n_failed,

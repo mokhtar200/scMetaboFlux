@@ -304,6 +304,7 @@ classifyATPLevels <- function(seurat_obj,
 #' @param oxphos_col OXPHOS score column
 #' @param z_score Z-score normalize the index
 #' @param name Column name
+#' @param verbose Print progress messages
 #' 
 #' @return Seurat object with GOX index added
 #' 
@@ -316,7 +317,8 @@ calculateGOXIndex <- function(seurat_obj,
                               glycolysis_col = "glycolysis",
                               oxphos_col = "oxidative_phosphorylation",
                               z_score = FALSE,
-                              name = "GOX_index") {
+                              name = "GOX_index",
+                              verbose = TRUE) {
   
   glycolysis_scores <- as.numeric(seurat_obj@meta.data[[glycolysis_col]])
   oxphos_scores <- as.numeric(seurat_obj@meta.data[[oxphos_col]])

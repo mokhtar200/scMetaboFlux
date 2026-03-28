@@ -13,9 +13,3 @@
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("[scMetaboFlux] For citation information, run: citation(\"scMetaboFlux\")")
 }
-
-#' @title Package Unload
-#' @keywords internal
-.onUnload <- function(libpath) {
-  library.dynam.unload("scMetaboFlux", libpath)
-}

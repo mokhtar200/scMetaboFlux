@@ -39,6 +39,10 @@ initParallelBackend <- function(n_cores = NULL, backend = c("future", "multicore
     options(mc.cores = n_cores)
     message("[scMetaboFlux] Parallel backend initialized with ", n_cores, " cores (multicore)")
   } else {
+    if (!requireNamespace("doParallel", quietly = TRUE)) {
+      message("[scMetaboFlux] doParallel not available, using sequential processing")
+      return(NULL)
+    }
     cl <- parallel::makeCluster(n_cores)
     doParallel::registerDoParallel(cl)
     message("[scMetaboFlux] Parallel backend initialized with ", n_cores, " cores (snow)")

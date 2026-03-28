@@ -244,6 +244,7 @@ classifyByHierarchical <- function(glycolysis, oxphos, atp) {
 #' @param gox_threshold Threshold for GOX classification (default 0)
 #' @param atp_threshold Threshold for ATP classification
 #' @param name Column name
+#' @param verbose Print progress messages
 #' 
 #' @return Seurat object with phenotype classification
 #' 
@@ -258,7 +259,8 @@ classifyByGOXIndex <- function(seurat_obj,
                                atp_col = "ATP_score",
                                gox_threshold = 0,
                                atp_threshold = NULL,
-                               name = "metabolic_phenotype") {
+                               name = "metabolic_phenotype",
+                               verbose = TRUE) {
   
   gox <- as.numeric(seurat_obj@meta.data[[gox_col]])
   gox[is.na(gox)] <- 0

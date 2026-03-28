@@ -9,7 +9,8 @@ calculateGOXIndex(
   glycolysis_col = "glycolysis",
   oxphos_col = "oxidative_phosphorylation",
   z_score = FALSE,
-  name = "GOX_index"
+  name = "GOX_index",
+  verbose = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ calculateGOXIndex(
 \item{z_score}{Z-score normalize the index}
 
 \item{name}{Column name}
+
+\item{verbose}{Print progress messages}
 }
 \value{
 Seurat object with GOX index added

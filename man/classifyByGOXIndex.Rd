@@ -10,7 +10,8 @@ classifyByGOXIndex(
   atp_col = "ATP_score",
   gox_threshold = 0,
   atp_threshold = NULL,
-  name = "metabolic_phenotype"
+  name = "metabolic_phenotype",
+  verbose = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ classifyByGOXIndex(
 \item{atp_threshold}{Threshold for ATP classification}
 
 \item{name}{Column name}
+
+\item{verbose}{Print progress messages}
 }
 \value{
 Seurat object with phenotype classification

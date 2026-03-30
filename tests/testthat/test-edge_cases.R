@@ -52,8 +52,8 @@ test_that("Function handles single cell", {
   rownames(counts) <- paste0("GENE", 1:100)
   colnames(counts) <- "SingleCell"
   
-  seurat_obj <- CreateSeuratObject(counts = counts)
-  seurat_obj <- NormalizeData(seurat_obj)
+  seurat_obj <- SeuratObject::CreateSeuratObject(counts = counts)
+  seurat_obj <- Seurat::NormalizeData(seurat_obj)
   
   # Should work with warning
   expect_warning(

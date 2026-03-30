@@ -30,9 +30,9 @@ library(Seurat)
   rownames(expr_matrix) <- all_genes
   colnames(expr_matrix) <- paste0("Cell_", 1:n_cells)
   
-  seurat_obj <- CreateSeuratObject(counts = expr_matrix)
-  seurat_obj <- NormalizeData(seurat_obj)
-  seurat_obj <- ScaleData(seurat_obj)
+  seurat_obj <- SeuratObject::CreateSeuratObject(counts = expr_matrix)
+  seurat_obj <- Seurat::NormalizeData(seurat_obj)
+  seurat_obj <- Seurat::ScaleData(seurat_obj)
   
   seurat_obj@meta.data$cell_type <- sample(
     c("T_cell", "B_cell", "Macrophage"),

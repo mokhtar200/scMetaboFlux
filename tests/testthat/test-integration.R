@@ -27,7 +27,7 @@ library(Seurat)
   rownames(expr_matrix) <- all_genes
   colnames(expr_matrix) <- paste0("Cell_", 1:n_cells)
   
-  seurat_obj <- CreateSeuratObject(counts = expr_matrix)
+  seurat_obj <- SeuratObject::CreateSeuratObject(counts = expr_matrix)
   
   seurat_obj@meta.data$cell_type <- sample(
     c("T_cell", "B_cell", "Macrophage"),
@@ -44,10 +44,10 @@ library(Seurat)
     n_cells, replace = TRUE
   )
   
-  seurat_obj <- NormalizeData(seurat_obj)
-  seurat_obj <- ScaleData(seurat_obj)
-  seurat_obj <- RunPCA(seurat_obj, verbose = FALSE, npcs = 10)
-  seurat_obj <- RunUMAP(seurat_obj, dims = 1:10, verbose = FALSE)
+  seurat_obj <- Seurat::NormalizeData(seurat_obj)
+  seurat_obj <- Seurat::ScaleData(seurat_obj)
+  seurat_obj <- Seurat::RunPCA(seurat_obj, verbose = FALSE, npcs = 10)
+  seurat_obj <- Seurat::RunUMAP(seurat_obj, dims = 1:10, verbose = FALSE)
   
   return(seurat_obj)
 }

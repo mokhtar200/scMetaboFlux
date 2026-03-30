@@ -217,9 +217,18 @@ validatePackageIntegrity <- function() {
   
   # Summary
   all_pass <- all(unlist(results))
+  
+  numeric_results <- results[grep("^fn_|^s4_|^gene_|^rate_|^atp_", names(results))]
+  tests_passed <- sum(unlist(numeric_results), na.rm = TRUE)
+  tests_total <- length(numeric_results)
+  
+  results$status <- ifelse(all_pass, "PASS", "FAIL")
+  results$tests_passed <- tests_passed
+  results$tests_total <- tests_total
+  
   cat("\nPackage Integrity Check:\n")
   cat(sprintf("Overall: %s\n", ifelse(all_pass, "PASS", "FAIL")))
-  cat(sprintf("Tests passed: %d/%d\n", sum(unlist(results)), length(results)))
+  cat(sprintf("Tests passed: %d/%d\n", tests_passed, tests_total))
   
   return(invisible(results))
 }

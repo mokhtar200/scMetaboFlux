@@ -51,7 +51,7 @@ create_test_seurat <- function(n_cells = 100, n_genes = 500, include_reduction =
   colnames(expr_matrix) <- paste0("Cell_", sprintf("%04d", 1:n_cells))
   
   # Create Seurat object
-  seurat_obj <- CreateSeuratObject(counts = expr_matrix, min.features = 10)
+  seurat_obj <- SeuratObject::CreateSeuratObject(counts = expr_matrix, min.features = 10)
   
   # Add metadata
   seurat_obj@meta.data$cell_type <- sample(
@@ -134,9 +134,9 @@ create_sparse_seurat <- function(n_cells = 100, n_genes = 200, sparsity = 0.95, 
   rownames(counts) <- genes
   colnames(counts) <- paste0("Cell_", 1:n_cells)
   
-  seurat_obj <- CreateSeuratObject(counts = counts)
-  seurat_obj <- NormalizeData(seurat_obj)
-  seurat_obj <- ScaleData(seurat_obj)
+  seurat_obj <- SeuratObject::CreateSeuratObject(counts = counts)
+  seurat_obj <- Seurat::NormalizeData(seurat_obj)
+  seurat_obj <- Seurat::ScaleData(seurat_obj)
   
   return(seurat_obj)
 }
@@ -164,7 +164,7 @@ create_imbalanced_seurat <- function(n_cells = c(10, 50, 200, 100, 5), seed = 42
   rownames(expr_matrix) <- genes
   colnames(expr_matrix) <- paste0("Cell_", 1:total_cells)
   
-  seurat_obj <- CreateSeuratObject(counts = expr_matrix)
+  seurat_obj <- SeuratObject::CreateSeuratObject(counts = expr_matrix)
   
   # Assign cell types with imbalanced distribution
   cell_types_vec <- rep(cell_types, times = n_cells)
@@ -174,8 +174,8 @@ create_imbalanced_seurat <- function(n_cells = c(10, 50, 200, 100, 5), seed = 42
   seurat_obj@meta.data$oxidative_phosphorylation <- rnorm(total_cells, mean = 0.5, sd = 0.2)
   seurat_obj@meta.data$ATP_score <- runif(total_cells, 0.3, 0.9)
   
-  seurat_obj <- NormalizeData(seurat_obj)
-  seurat_obj <- ScaleData(seurat_obj)
+  seurat_obj <- Seurat::NormalizeData(seurat_obj)
+  seurat_obj <- Seurat::ScaleData(seurat_obj)
   
   return(seurat_obj)
 }
@@ -245,9 +245,9 @@ create_seurat_with_metabolism <- function(n_cells = 50,
   rownames(expr_matrix) <- all_genes
   colnames(expr_matrix) <- paste0("Cell_", 1:n_cells)
   
-  seurat_obj <- CreateSeuratObject(counts = expr_matrix)
-  seurat_obj <- NormalizeData(seurat_obj)
-  seurat_obj <- ScaleData(seurat_obj)
+  seurat_obj <- SeuratObject::CreateSeuratObject(counts = expr_matrix)
+  seurat_obj <- Seurat::NormalizeData(seurat_obj)
+  seurat_obj <- Seurat::ScaleData(seurat_obj)
   
   return(seurat_obj)
 }

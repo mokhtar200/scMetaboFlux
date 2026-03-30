@@ -126,13 +126,13 @@ estimateATPProduction <- function(seurat_obj,
       max_glycolysis <- max(glycolysis_scores, na.rm = TRUE)
       max_oxphos <- max(oxphos_scores, na.rm = TRUE)
       
-      if (max_glycolysis > 0) {
+      if (is.finite(max_glycolysis) && max_glycolysis > 0) {
         relative_glycolysis <- glycolysis_scores / max_glycolysis
       } else {
         relative_glycolysis <- glycolysis_scores
       }
       
-      if (max_oxphos > 0) {
+      if (is.finite(max_oxphos) && max_oxphos > 0) {
         relative_oxphos <- oxphos_scores / max_oxphos
       } else {
         relative_oxphos <- oxphos_scores
@@ -146,11 +146,16 @@ estimateATPProduction <- function(seurat_obj,
   atp_scores <- as.numeric(atp_scores)
   
   if (normalize) {
-    min_atp <- min(atp_scores, na.rm = TRUE)
-    max_atp <- max(atp_scores, na.rm = TRUE)
-    
-    if (max_atp > min_atp) {
-      atp_scores <- (atp_scores - min_atp) / (max_atp - min_atp)
+    valid_scores <- atp_scores[is.finite(atp_scores)]
+    if (length(valid_scores) > 0) {
+      min_atp <- min(valid_scores)
+      max_atp <- max(valid_scores)
+      
+      if (max_atp > min_atp) {
+        atp_scores <- (atp_scores - min_atp) / (max_atp - min_atp)
+      } else {
+        atp_scores <- rep(0.5, length(atp_scores))
+      }
     } else {
       atp_scores <- rep(0.5, length(atp_scores))
     }

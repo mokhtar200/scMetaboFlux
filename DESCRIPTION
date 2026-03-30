@@ -22,7 +22,6 @@ Description: Inferring cellular energy states from single-cell transcriptomics
     (7) High-performance parallel processing for large datasets.
 License: Artistic-2.0
 License_File: LICENSE
-License: file LICENSE
 URL: https://github.com/scMetaboFlux/scMetaboFlux
 BugReports: https://github.com/scMetaboFlux/scMetaboFlux/issues
 Encoding: UTF-8

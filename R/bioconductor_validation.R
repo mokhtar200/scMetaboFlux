@@ -826,7 +826,8 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
   # Test 7.1: Integration with SCTransform
   n_tests <- n_tests + 1
   tryCatch({
-    if (!requireNamespace("sctransform", quietly = TRUE)) {
+    has_sctransform <- requireNamespace("sctransform", quietly = TRUE)
+    if (!has_sctransform) {
       message("  - Skipping SCTransform test (package not available)")
       n_tests <- n_tests - 1
     } else {
@@ -836,7 +837,8 @@ testSeuratWorkflowIntegration <- function(verbose = TRUE) {
       colnames(counts) <- paste0("C", 1:200)
       
       obj <- Seurat::CreateSeuratObject(counts = counts)
-      obj <- sctransform::SCTransform(obj, verbose = FALSE)
+      sct_fn <- get("SCTransform", asNamespace("sctransform"), inherits = FALSE)
+      obj <- sct_fn(obj, verbose = FALSE)
       
       obj <- computePathwayScores(obj, method = "mean", verbose = FALSE)
       
